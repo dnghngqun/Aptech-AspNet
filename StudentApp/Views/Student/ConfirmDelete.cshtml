@@ -1,0 +1,16 @@
+@model StudentApp.Models.Student
+
+<h1>Confirm Delete</h1>
+
+<p>Are you sure you want to delete the student?</p>
+<h3>Student Information:</h3>
+<p>Id: @Model.Id</p>
+<p>Name: @Model.Name</p>
+<p>Age: @Model.Age</p>
+<p>Email: @Model.Email</p>
+
+<form method="post" asp-action="ConfirmDelete">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit">Yes, delete</button>
+    <a href="/Student/Index">No, cancel</a>
+</form>

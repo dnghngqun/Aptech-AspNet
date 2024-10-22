@@ -1,0 +1,39 @@
+<style>
+    th, td {
+    border: 1px solid;
+    border-color: #96D4D4;
+}
+</style>
+@model IEnumerable<StudentApp.Models.Student>
+
+<h1>Search</h1>
+<form asp-action="Search" method="get">
+    <input type="text" name="query" placeholder="Search students by ID or name" />
+    <button type="submit">Search</button>
+</form>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Name</td>
+                <td>@student.Age</td>
+                <td>@student.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@student.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

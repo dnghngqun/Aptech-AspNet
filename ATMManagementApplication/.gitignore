@@ -1,0 +1,65 @@
+# ASP.NET Core /.NET Core Ignore File
+
+## Folders to ignore
+bin/
+obj/
+# The Visual Studio Code workspace file
+.vscode/
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated VS project files
+*.vspcc
+*.vssscc
+.vs/
+
+# Rider settings
+.idea/
+*.sln.iml
+
+# Build results
+project.lock.json
+project.fragment.lock.json
+artifacts/
+backup/
+node_modules/
+
+# NuGet packages
+*.nupkg
+**/packages/*
+*.snupkg
+
+# Environment and config files
+.env
+.env.*
+
+# Logs
+*.log
+Logs/
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+
+# OS-specific files (optional)
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Additional configurations
+*.config

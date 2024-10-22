@@ -1,0 +1,13 @@
+@model StudentApp.Models.Student
+
+
+<h1>Update Student</h1>
+
+<h5>Information: @Model.Id | @Model.Name | @Model.Age | @Model.Email</h5>
+<form asp-action="Edit" method="Post">
+    <input type="hidden" asp-for="Id" />
+    Name: <input type="text" asp-for="Name" name="Name"  placeholder="Enter name"> <br>
+    Age: <input type="number" asp-for="Age" name="Age"  placeholder="Enter Age"> <br>
+    Email: <input type="email" asp-for="Email" name="Email" placeholder="Enter email" ><br>
+    <button type="submit">Update</button>
+</form>
