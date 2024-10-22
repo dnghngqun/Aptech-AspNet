@@ -6,7 +6,6 @@ namespace ATMManagementApplication.Models{
         [Key] //primary key // @id trong java
         public int CustomerId { get; set; }
         
-        [Required]
         public string Name{ get; set; }
 
         public string Email{ get; set; }
