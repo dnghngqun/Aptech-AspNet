@@ -12,8 +12,6 @@ builder.Services.AddDbContext<ATMContext>(options =>
     ) 
 );
 
-
-
 var app = builder.Build();
 
 if(app.Environment.IsDevelopment()){
