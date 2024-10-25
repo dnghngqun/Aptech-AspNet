@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using ATMManagementApplication.Data;
 using ATMManagementApplication.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 var builder = WebApplication.CreateBuilder(args);
+
+//get jwt data from appsetting.json
+var jwtSetting = builder.Configuration.GetSection("Jwt");
 
 //add service to container => thiet lap cau hinh data model
 builder.Services.AddControllers();
@@ -12,6 +18,19 @@ builder.Services.AddDbContext<ATMContext>(options =>
     ) 
 );
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters{
+            ValidateIssuer = false,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudiences = jwtSetting.GetSection("Audience").Get<string[]>(),
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtSetting["SecretKey"]))
+        };
+    });
+
+
 var app = builder.Build();
 
 if(app.Environment.IsDevelopment()){
@@ -19,7 +38,7 @@ if(app.Environment.IsDevelopment()){
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
