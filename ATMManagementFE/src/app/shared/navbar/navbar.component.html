@@ -1,0 +1,25 @@
+<div class="group-header">
+  <div class="header">
+    <div class="logo"><span>lo</span>go</div>
+    <nav class="navigation">
+      <ul>
+        <li>
+          <a [routerLink]="['/home']" [ngClass]="{ active: isActive('/home') }"
+            ><img src="assets/svg/home.svg" alt="" />Home</a
+          >
+        </li>
+        <li>
+          <a [routerLink]="['/atm']" [ngClass]="{ active: isActive('/atm') }"
+            ><img src="assets/svg/atm.svg" alt="" />ATM</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div class="btn-right">
+      <button class="btn btn-primary" [routerLink]="['/login']">Login</button>
+      <button class="btn btn-secondary" [routerLink]="['/register']">
+        Register
+      </button>
+    </div>
+  </div>
+</div>

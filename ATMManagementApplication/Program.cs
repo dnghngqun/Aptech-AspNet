@@ -1,44 +1,66 @@
 using Microsoft.EntityFrameworkCore;
 using ATMManagementApplication.Data;
-using ATMManagementApplication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
+using System.Text;
+using ATMManagementApplication.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-//get jwt data from appsetting.json
-var jwtSetting = builder.Configuration.GetSection("Jwt");
+// JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
 
-//add service to container => thiet lap cau hinh data model
+builder.Services.AddSingleton<OtpService>();
+
+// Add services to the container
 builder.Services.AddControllers();
-builder.Services.AddScoped<EmailService>();
-builder.Services.AddDbContext<ATMContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8,0,403))
-    ) 
-);
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => {
-        options.TokenValidationParameters = new TokenValidationParameters{
-            ValidateIssuer = false,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidAudiences = jwtSetting.GetSection("Audience").Get<string[]>(),
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtSetting["SecretKey"]))
-        };
-    });
+// Configure CORS to allow requests from specific origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 
+// Configure DbContext for MySQL
+builder.Services.AddDbContext<ATMContext>(options => 
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+    new MySqlServerVersion(new Version(8, 0, 33))));
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment()){
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
     app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
+
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthorization();
 
 app.MapControllers();

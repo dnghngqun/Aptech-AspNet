@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quản Lý ATM</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản Lý ATM</h1>
+        <div id="auth-section">
+            <h2>Đăng Nhập</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Mật Khẩu" required>
+            <button onclick="login()">Đăng Nhập</button>
+        </div>
+
+        <div id="user-section" style="display: none;">
+            <h2>Thông Tin Khách Hàng</h2>
+            <p id="customer-info"></p>
+            <button onclick="getBalance()">Kiểm Tra Số Dư</button>
+            <button onclick="getTransactionHistory()">Lịch Sử Giao Dịch</button>
+            <button onclick="requestOtp()">Gửi OTP</button>
+
+            <h3>Rút Tiền</h3>
+            <input type="number" id="withdraw-amount" placeholder="Số Tiền" required>
+            <input type="text" id="withdraw-otp" placeholder="Nhập OTP" required>
+            <button onclick="withdraw()">Rút Tiền</button>
+
+            <h3>Gửi Tiền</h3>
+            <input type="number" id="deposit-amount" placeholder="Số Tiền" required>
+            <input type="text" id="deposit-otp" placeholder="Nhập OTP" required>
+            <button onclick="deposit()">Gửi Tiền</button>
+
+            <h3>Chuyển Khoản</h3>
+            <input type="number" id="transfer-amount" placeholder="Số Tiền" required>
+            <input type="number" id="receive-id" placeholder="ID Người Nhận" required>
+            <input type="text" id="transfer-otp" placeholder="Nhập OTP" required>
+            <button onclick="transfer()">Chuyển Khoản</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

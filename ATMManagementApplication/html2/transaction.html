@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao Dịch</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Giao Dịch</h2>
+        <button id="logout">Đăng Xuất</button>
+        <button type="button" id="requestOTP">Gửi OTP</button>
+        <p><a href="changePassword.html">Thay Đổi Mật Khẩu</a></p>
+        <form id="withdrawForm">
+            <h3>Rút Tiền</h3>
+            <input type="number" id="withdrawAmount" placeholder="Số Tiền" required>
+            <input type="text" id="otpWithdraw" placeholder="OTP" required>
+            <button type="submit">Rút</button>
+        </form>
+        <form id="depositForm">
+            <h3>Gửi Tiền</h3>
+            <input type="number" id="depositAmount" placeholder="Số Tiền" required>
+            <input type="text" id="otpDeposit" placeholder="OTP" required>
+            <button type="submit">Gửi</button>
+        </form>
+        <form id="transferForm">
+            <h3>Chuyển Khoản</h3>
+            <input type="number" id="transferAmount" placeholder="Số Tiền" required>
+            <input type="text" id="otpTransfer" placeholder="OTP" required>
+            <input type="number" id="receiveId" placeholder="ID Người Nhận" required>
+            <button type="submit">Chuyển</button>
+        </form>
+        <br>
+        <button id="transactionHistory">Lịch Sử Giao Dịch</button>
+        <button id="checkBalance">Kiểm Tra Số Dư</button>
+        <br>
+        <div id="transactionHistoryData"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

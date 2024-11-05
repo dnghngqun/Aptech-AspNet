@@ -1,19 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ATMManagementApplication.Models{
-
-    public class Customer { 
-        [Key] //primary key // @id trong java
+namespace ATMManagementApplication.Models
+{
+    public class Customer
+    {
+        [Key]
         public int CustomerId { get; set; }
-        
-        public string Name{ get; set; }
+        public required string Name { get; set; }
 
-        public string Email{ get; set; }
+        [Required]
+        public required string Password { get; set; }
 
-        public string Password { get; set; }
+        [Required]
+        public required string Email { get; set; }
 
         public decimal Balance { get; set; }
-        
-
     }
 }

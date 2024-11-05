@@ -70,12 +70,52 @@ namespace ATMManagementApplication.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("TransactionId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("ATMManagementApplication.Models.TransactionLimit", b =>
+                {
+                    b.Property<int>("LimitId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("LimitId"));
+
+                    b.Property<decimal>("DailyLimit")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("SingleTransactionLimit")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("LimitId");
+
+                    b.ToTable("TransactionLimits");
+
+                    b.HasData(
+                        new
+                        {
+                            LimitId = 1,
+                            DailyLimit = 100000m,
+                            SingleTransactionLimit = 10000m,
+                            TransactionType = "Withdraw"
+                        },
+                        new
+                        {
+                            LimitId = 3,
+                            DailyLimit = 80000m,
+                            SingleTransactionLimit = 8000m,
+                            TransactionType = "Transfer"
+                        });
                 });
 #pragma warning restore 612, 618
         }
