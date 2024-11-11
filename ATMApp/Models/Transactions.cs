@@ -7,6 +7,7 @@ namespace ATMApp.Models
         [Key]
         public int TransactionId { get; set; }
         public int AccountId { get; set; }
+        
         public Account? Account { get; set; }
         public decimal Amount { get; set; }
         public DateTime TimeStamp { get; set; } = DateTime.Now;

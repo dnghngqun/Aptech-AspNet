@@ -1,0 +1,13 @@
+body {
+    background-color: #f0f8ff;
+  }
+  
+  .text-primary {
+    color: #007bff !important;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  

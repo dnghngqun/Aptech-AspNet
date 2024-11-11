@@ -9,6 +9,7 @@ public class ATMContext : DbContext
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
+        // khởi tạo rằng buộc giữa các bảng
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            modelBuilder.Entity<User>()
