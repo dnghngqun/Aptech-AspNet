@@ -17,22 +17,37 @@ namespace ComicSystem.Controllers
 
         // POST: api/rentals
         [HttpPost]
-        public async Task<ActionResult<Rental>> PostRental(Rental rental)
+        public async Task<ActionResult<Rental>> PostRental(RentalCreateDTO rentalDTO)
         {
-            // Calculate total price based on rented books and quantity
-            rental.Status = Rental.RentalStatus.Rented; // Mark rental status as rented
+            if (rentalDTO.RentalDetails == null || rentalDTO.RentalDetails.Count == 0)
+            {
+                return BadRequest("At least one rental detail is required.");
+            }
 
+            // Tạo đối tượng Rental từ DTO
+            Rental rental = new Rental
+            {
+                CustomerId = rentalDTO.CustomerId,
+                RentalDate = rentalDTO.RentalDate,
+                ReturnDate = rentalDTO.ReturnDate,
+                Status = Rental.RentalStatus.Rented, // Tự động set Status là Rented
+                RentalDetails = rentalDTO.RentalDetails.Select(rd => new RentalDetail
+                {
+                    ComicBookId = rd.ComicBookId,
+                    Quantity = rd.Quantity
+                }).ToList()
+            };
+
+            // Thêm rental vào database
             _context.Rentals.Add(rental);
             await _context.SaveChangesAsync();
 
             foreach (var rentalDetail in rental.RentalDetails)
             {
-                // Set price per day for each rental detail
                 rentalDetail.PricePerDay = _context.ComicBooks
                     .Where(cb => cb.Id == rentalDetail.ComicBookId)
                     .Select(cb => cb.PricePerDay)
                     .FirstOrDefault();
-                
                 _context.RentalDetails.Add(rentalDetail);
             }
 
@@ -40,6 +55,8 @@ namespace ComicSystem.Controllers
 
             return CreatedAtAction(nameof(GetRental), new { id = rental.Id }, rental);
         }
+
+
 
         // GET: api/rentals/5
         [HttpGet("{id}")]
@@ -57,4 +74,20 @@ namespace ComicSystem.Controllers
             return rental;
         }
     }
+        // DTO cho Rental
+    public class RentalCreateDTO
+    {
+        public int CustomerId { get; set; }
+        public DateTime RentalDate { get; set; }
+        public DateTime ReturnDate { get; set; }
+        public List<RentalDetailDTO> RentalDetails { get; set; }
+    }
+
+    // DTO cho RentalDetail
+    public class RentalDetailDTO
+    {
+        public int ComicBookId { get; set; }
+        public int Quantity { get; set; }
+    }
+
 }

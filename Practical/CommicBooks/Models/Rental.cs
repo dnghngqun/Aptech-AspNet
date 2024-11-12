@@ -10,7 +10,7 @@ namespace ComicSystem.Models
         public DateTime RentalDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public RentalStatus Status { get; set; }
-
+        public ICollection<RentalDetail> RentalDetails { get; set; } 
         public enum RentalStatus
         {
             Pending,
@@ -19,7 +19,6 @@ namespace ComicSystem.Models
             Returned
         }
 
-        public ICollection<RentalDetail> RentalDetails { get; set; }
-        public Customer? Customer { get; set; }
+        public Customer Customer { get; set; }
     }
 }

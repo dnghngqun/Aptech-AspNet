@@ -192,6 +192,8 @@ $(document).ready(function () {
             rentalDate: $("#rentalDate").val(),
             returnDate: $("#returnDate").val()
         };
+        console.log(rental); 
+
 
         $.ajax({
             url: "http://localhost:5247/api/rentals",
